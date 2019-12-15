@@ -37,7 +37,8 @@ provider:
     CONNECTIONS_TABLE: Connections-${self:provider.stage}
     IMAGES_S3_BUCKET: serverless-udagram-images-123-${self:provider.stage}
     THUMBNAILS_S3_BUCKET: serverless-udagram-thumbnails-123-${self:provider.stage}
-    AUTH_0_CERTIFICATE: -----BEGIN CERTIFICATE-----
+    AUTH_0_CERTIFICATE: |
+      -----BEGIN CERTIFICATE-----
       MIIDDTCCAfWgAwIBAgIJNNDPXZn01uz+MA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV
       BAMTGWRldi05bmNkcWRhdC5ldS5hdXRoMC5jb20wHhcNMTkxMjE1MTE0MDEyWhcN
       MzMwODIzMTE0MDEyWjAkMSIwIAYDVQQDExlkZXYtOW5jZHFkYXQuZXUuYXV0aDAu
@@ -56,7 +57,6 @@ provider:
       Hg+MFLO+IrspKQ0rGCZJfoB9FO/Cb90qqI+u6ASZEkAhT6cD2oc9Q+m2WzFpQfuq
       U3os1fyexx7zrFHwYbOoK44=
       -----END CERTIFICATE-----
-
     SIGNED_URL_EXPIRATION: 300
   iamRoleStatements:
     - Effect: Allow
