@@ -37,6 +37,26 @@ provider:
     CONNECTIONS_TABLE: Connections-${self:provider.stage}
     IMAGES_S3_BUCKET: serverless-udagram-images-123-${self:provider.stage}
     THUMBNAILS_S3_BUCKET: serverless-udagram-thumbnails-123-${self:provider.stage}
+    AUTH_0_CERTIFICATE: -----BEGIN CERTIFICATE-----
+      MIIDDTCCAfWgAwIBAgIJNNDPXZn01uz+MA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV
+      BAMTGWRldi05bmNkcWRhdC5ldS5hdXRoMC5jb20wHhcNMTkxMjE1MTE0MDEyWhcN
+      MzMwODIzMTE0MDEyWjAkMSIwIAYDVQQDExlkZXYtOW5jZHFkYXQuZXUuYXV0aDAu
+      Y29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyIfjjtVOp6km5pSK
+      8J3yq4OLA9kGARRn/FGcCYIwFHWAtNNVohLgGr+Ndup2zGx9DJ26ofgqz9lo4N9+
+      TigxDLcPg3V0GX6TrjnfP/vs7WvUVREg01jY36GmaXB53ExaP6l6kCvkVO20zXaA
+      xWPcEBB6FljQcsV68QT+4qvz3vwWqMHIEGYP0Q2wd53qY4Aa4XLEEu2Wp1DuG2kc
+      gPTFOXH01lyE0vfeQ/PYoZ01sAJks0JRiZ8VuOMz+cc2FcZTJfEA8zgNDqT7EPfr
+      CdSGkGji6ZnjHEB4QU+MmaiaxUnutv+ih3PDZtegZbb6ShRaWDHR0gVxwMXrs7Mp
+      c4WbEwIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRcxfXGTC4Q
+      8AkknSHKDwGFU1hXKzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB
+      ALgzC5jv4oQ7hajQ0vbk1NQNiFxCaFtxiPzZY9Eem1E3kGPMpfD3MXODzxIH46/P
+      A59gMKnqvuH9QkUE+JFHOO9DJ+gX1TwSO0AUR5Z8EuTEyW1+iwH/OJKNjZ1HBXuC
+      AFapMefJ9wZvPYHezwFQXb+C8HmT8kSO4Xs+fBvHUDZhW4OH7Lxx2U9R2lSs6UwB
+      cs6etGETxGNTl6foOul/hRrcmktak+ssB2UMrty9waZxiAEGA6Zl2w5jIzbE1hIM
+      Hg+MFLO+IrspKQ0rGCZJfoB9FO/Cb90qqI+u6ASZEkAhT6cD2oc9Q+m2WzFpQfuq
+      U3os1fyexx7zrFHwYbOoK44=
+      -----END CERTIFICATE-----
+
     SIGNED_URL_EXPIRATION: 300
   iamRoleStatements:
     - Effect: Allow
@@ -72,6 +92,8 @@ provider:
       Resource: arn:aws:s3:::${self:provider.environment.THUMBNAILS_S3_BUCKET}/*
 
 functions:
+  RS256Auth:
+    handler: src/lambda/auth/rs256Auth0Authorizer.handler
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
   GetGroups:
@@ -88,7 +110,7 @@ functions:
           method: post
           path: groups
           cors: true
-          authorizer: Auth
+          authorizer: RS256Auth
           reqValidatorName: RequestBodyValidator
           documentation:
             summary: Create a new group
@@ -116,7 +138,7 @@ functions:
           method: post
           path: groups/{groupId}/images
           cors: true
-          authorizer: Auth
+          authorizer: RS256Auth
           reqValidatorName: RequestBodyValidator
           documentation:
             summary: Create a new image
