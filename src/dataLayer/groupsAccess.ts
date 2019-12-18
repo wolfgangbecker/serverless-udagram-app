@@ -6,7 +6,7 @@ import { Group } from '../models/Group'
 export class GroupAccess {
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
-    private readonly groupsTable: process.env.GROUPS_TABLE
+    private readonly groupsTable: any = process.env.GROUPS_TABLE
   ) {}
 
   async getAllGroups(): Promise<Group[]> {
