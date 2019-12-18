@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "aws-lambda": "0.1.2",
+    "aws-xray-sdk": "2.5.0",
     "elasticsearch": "16.5.0",
     "http-aws-es": "6.0.0",
     "jimp": "0.9.3",

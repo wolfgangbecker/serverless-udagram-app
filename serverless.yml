@@ -38,6 +38,9 @@ plugins:
   - serverless-offline
 
 provider:
+  tracing:
+    lambda: true
+    apiGateway: true
   name: aws
   runtime: nodejs8.10
   stage: ${opt:stage, 'dev'}
